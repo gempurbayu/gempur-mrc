@@ -38,27 +38,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Debug Node/npm versions
-        run: |
-          node --version
-          npm --version
-          which node
-          which npm
-
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
-
-      - name: Build workspaces
-        run: npm run build
-
-      - name: Run API unit tests
-        run: npm test -w @tavily-research/api -- --runInBand
+      - name: Build and test API Docker image
+        run: docker build --target test -f apps/api/Dockerfile -t gempur-mrc-api:test .
 
       - name: Build API Docker image
         run: docker build -f apps/api/Dockerfile -t gempur-mrc-api:ci .
