@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -40,6 +43,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
+
+      - name: Debug Node/npm versions
+        run: |
+          node --version
+          npm --version
+          which node
+          which npm
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund
