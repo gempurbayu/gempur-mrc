@@ -1,6 +1,6 @@
-# Tavily Research App
+# Gempur Market Research Center
 
-Monorepo starter for a research app:
+Monorepo starter for a market research center:
 
 - `apps/web` — React + TypeScript + Vite frontend
 - `apps/api` — NestJS backend
