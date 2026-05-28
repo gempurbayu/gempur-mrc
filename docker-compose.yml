@@ -17,5 +17,33 @@ services:
       timeout: 5s
       retries: 5
 
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: gempur-mrc-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${API_PORT:-3000}:3000"
+    environment:
+      API_PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app_password}@postgres:5432/${POSTGRES_DB:-gempur_mrc}
+      TYPEORM_SYNC: ${TYPEORM_SYNC:-false}
+      WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost:5173}
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: gempur-mrc-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "${WEB_PORT:-5173}:80"
+
 volumes:
   postgres-data:

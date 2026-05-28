@@ -1,0 +1,12 @@
+FROM node:24-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+COPY apps/web/package*.json apps/web/
+RUN npm ci --workspace @tavily-research/web --include-workspace-root
+COPY apps/web ./apps/web
+RUN npm run build -w @tavily-research/web
+
+FROM nginx:1.27-alpine AS runtime
+COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/apps/web/dist /usr/share/nginx/html
+EXPOSE 80
