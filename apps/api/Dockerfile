@@ -1,5 +1,6 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
+RUN npm install -g npm@11.16.0
 COPY package*.json ./
 COPY apps/api/package*.json apps/api/
 RUN npm install --workspace @tavily-research/api --include-workspace-root --no-audit --no-fund
@@ -17,6 +18,7 @@ RUN npm test -w @tavily-research/api -- --runInBand
 FROM node:22-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
+RUN npm install -g npm@11.16.0
 COPY package*.json ./
 COPY apps/api/package*.json apps/api/
 RUN npm install --workspace @tavily-research/api --omit=dev --include-workspace-root --no-audit --no-fund && npm cache clean --force

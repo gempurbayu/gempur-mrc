@@ -1,5 +1,6 @@
 FROM node:22-alpine AS build
 WORKDIR /app
+RUN npm install -g npm@11.16.0
 COPY package*.json ./
 COPY apps/web/package*.json apps/web/
 RUN npm install --workspace @tavily-research/web --include-workspace-root --no-audit --no-fund
