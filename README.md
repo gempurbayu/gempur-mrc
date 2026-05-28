@@ -9,7 +9,7 @@ Monorepo starter for Gempur Market Research Center:
 
 ## Requirements
 
-- Node.js 24+
+- Node.js 22+
 - npm 11+
 - Docker with Compose plugin for full local stack
 

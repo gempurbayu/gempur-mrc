@@ -38,12 +38,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24.15.0
+          node-version: 22
+          cache: npm
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
-        with:
-          install-command: npm ci --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Build workspaces
         run: npm run build
