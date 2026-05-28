@@ -1,9 +1,9 @@
 FROM node:22-alpine AS build
 WORKDIR /app
-RUN npm install -g npm@11.16.0
+RUN npm config set registry https://registry.npmjs.org/ && npm install -g npm@11.16.0
 COPY package*.json ./
 COPY apps/web/package*.json apps/web/
-RUN npm install --workspace @tavily-research/web --include-workspace-root --no-audit --no-fund
+RUN npm config set registry https://registry.npmjs.org/ && npm install --workspace @tavily-research/web --include-workspace-root --no-audit --no-fund
 COPY apps/web ./apps/web
 RUN npm run build -w @tavily-research/web
 
